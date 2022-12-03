@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { Modal, Form } from 'react-bootstrap'
 import StackType from '../StackType'
-import Alert from 'react-bootstrap/Alert';
 
 
 export default function StackModal({ show, handleClose }) {
@@ -18,7 +17,13 @@ export default function StackModal({ show, handleClose }) {
             <Modal.Body className='bg-light text-light'>
 
                 <Form.Group className=' text-light row'>
-                    <Form.Control className='bg-light w-75 m-2 col' type='text' placeholder='Value of New Element' ref={stackRef} />
+                    <Form.Control className='bg-light w-75 m-2 col' type='text' placeholder='Value of New Element' ref={stackRef} onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                            stackRef.current.value !== "" ?
+                                setStack([stackRef.current.value, ...stack]) : alert("Please enter a value")
+                            stackRef.current.value = ""
+                        }
+                    }} />
                     <button className='btn btn-dark w-25 m-2 col fs-4'
                         onClick={() => {
                             stackRef.current.value !== "" ?
